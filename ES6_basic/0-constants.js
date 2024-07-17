@@ -1,6 +1,7 @@
-const taskFirstMessage = 'I prefer const when I can.';
-
-export const taskFirst = () => taskFirstMessage;
+export const taskFirst = () => {
+  const task = 'I prefer const when I can.';
+  return task;
+};
 
 export const getLast = () => ' is okay';
 

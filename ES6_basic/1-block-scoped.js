@@ -3,8 +3,7 @@ export default function taskBlock(trueOrFalse) {
   const task2 = true;
 
   if (trueOrFalse) {
-    const task = true; 
-    const task2 = false;
+    // No need to re-declare new variables in the if block because they aren't used
   }
 
   return [task, task2];

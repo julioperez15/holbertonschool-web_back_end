@@ -1,6 +1,20 @@
 #!/usr/bin/env python3
-""" 5. Complex types - list of floats """
+"""
+This module provides a function to sum a list of floats.
+"""
 
-def sum_list(input_list: list) -> float:
-    """ Return sum of list of floats """
+
+from typing import List
+
+
+def sum_list(input_list: List[float]) -> float:
+    """
+    Returns the sum of a list of floats.
+
+    Args:
+        input_list (List[float]): The list of float numbers to sum.
+
+    Returns:
+        float: The sum of the float numbers in the list.
+    """
     return sum(input_list)

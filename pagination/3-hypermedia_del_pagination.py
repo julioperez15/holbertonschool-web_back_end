@@ -5,7 +5,7 @@ Deletion-resilient hypermedia pagination
 
 import csv
 import math
-from typing import List, Dict, Any
+from typing import List, Dict
 
 
 class Server:
@@ -40,34 +40,43 @@ class Server:
         return self.__indexed_dataset
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
-        """Return a dictionary with the page information and data.
         """
-        assert isinstance(index, (int, type(None)))\
-            and isinstance(page_size, int)
-        assert page_size >= 0
+            Get the hyper index
 
-        indexed_dataset = self.indexed_dataset()
-        dataset_size = len(indexed_dataset)
+            Args:
+                index: Current page
+                page_size: Total size of the page
 
-        if index is None:
-            index = 0
+            Return:
+                Hyper index
+        """
+        result_dataset = []
+        index_data = self.indexed_dataset()
+        keys_list = list(index_data.keys())
+        assert index + page_size < len(keys_list)
+        assert index < len(keys_list)
 
-        assert 0 <= index < dataset_size
+        if index not in index_data:
+            start_index = keys_list[index]
+        else:
+            start_index = index
 
-        data: List[List[Any]] = []
-        current_index = index
+        for i in range(start_index, start_index + page_size):
+            if i not in index_data:
+                result_dataset.append(index_data[keys_list[i]])
+            else:
+                result_dataset.append(index_data[i])
 
-        while len(data) < page_size and current_index < dataset_size:
-            if current_index in indexed_dataset:
-                data.append(indexed_dataset[current_index])
-            current_index += 1
+        next_index: int = index + page_size
 
-        next_index = current_index if current_index < dataset_size else None
+        if index in keys_list:
+            next_index
+        else:
+            next_index = keys_list[next_index]
 
         return {
-            "index": index,
-            "next_index": next_index,
-            "page_size": page_size,
-            "data": data
+            'index': index,
+            'next_index': next_index,
+            'page_size': len(result_dataset),
+            'data': result_dataset
         }
-    
